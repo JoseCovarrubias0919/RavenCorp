@@ -1,0 +1,15 @@
+{% extends './Pruebas.html' %}
+
+{% block title %}{{ data.Titulo }}{% endblock %}
+{% block body %}
+<h1>{{ data.Bienbenido }}</h1>
+{% if data.numero_cursos > 0 %}
+<ul>
+    {% for c in data.Cursos %}
+    <li>{{ c }}</li>
+    {% endfor %}
+</ul>
+{% else %}
+<h2>No Existen Cursos</h2>
+{% endif %}
+{% endblock %}

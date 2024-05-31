@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="C:\Users\braya\OneDrive\Documents\TECNL\RavenCorp\Logos\LogoRavenCorrp.png">
+<title>RavenCorp</title>
+<style>
+/* Estilos CSS para adaptar el contenido a la pantalla */
+body {
+  font-family: calibri;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 100%;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+.header {
+  background-color: #8416A2;
+  padding: 8px;
+  margin-top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.header img {
+  max-width: 15%;
+  height: auto;
+}
+
+
+.buscador {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.buscador select {
+  font-size: 30px;
+  width: 900px;
+  margin-bottom: 0px;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #f0f0f0;
+  background-repeat: no-repeat;
+  background-position: right center;
+  background-size: 20px;
+}
+
+.buscador select:focus {
+  outline: none;
+  box-shadow: 0 0 5px rgba(132, 22, 162, 0.5);
+}
+
+.titulo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 10vh;
+  margin: 10px;
+  font-size: 70px;
+}
+
+.mejoresProductos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin: 20px;
+}
+
+.mejoresProductos img {
+  margin-right: 50px;
+  width: 250px;
+  height: auto;
+}
+
+.divisora {
+  width: 100%;
+  max-width: 1760px;
+  height: 2px;
+  background-color: #CCCCCC;
+  margin: 0 auto;
+  margin-top: 100px;
+}
+
+.encuestas {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: row;
+  margin: 20px;
+}
+
+.encuestas > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 40px;
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  margin-right: auto;
+  margin-left: auto;
+  width: calc(30% - 300px); /* Ajusta el tamaño del cuadro aquí */
+  max-width: 400px;
+  min-width: 200px;
+}
+
+
+.encuestas p {
+  font-size: 25px;
+  margin-bottom: 15px;
+}
+
+.encuestas .submit-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #8416A2;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.encuestas .submit-button:hover {
+  background-color: #6b118a;
+}
+
+@media screen and (max-width: 768px) {
+  .header {
+    padding: 10px;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <header class="header">
+    <img src="C:\Users\braya\OneDrive\Documents\TECNL\RavenCorp\Logos\Raven corp Letras 2.png" alt="Imagen en el centro">
+    
+  </header>
+
+  <div class="buscador">
+    <select name="Categorias">
+      <option value="Profesor">Alimentación y bebidas</option>
+      <option value="Estudiante">Electrónica y tecnología</option>
+      <option value="Empleado">Salud y bellesa</option>
+      <option value="Empleado">Deporte y tiempo libre</option>
+      <option value="Empleado">Moda y accesorios</option>
+
+    </select>
+  </div>
+
+<!--Los mejores productos cambian-->
+  <div>
+    <h1 class="titulo">Mejores productos</h1>
+    <div class="mejoresProductos">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRntkdh9GFxv7IMkkRa954fUDZMXKgZ4_G9P3jk7l1HYHfT2SERsJ70u3vPxRuT785Jvzs&usqp=CAU" alt="Mejor producto">
+      <img src="https://i.pinimg.com/originals/09/9d/33/099d3398ea779a51f35059ba49de93b6.jpg" alt="Mejor producto">
+      <img src="https://mir-s3-cdn-cf.behance.net/projects/404/06f19c77177179.Y3JvcCwyODc2LDIyNTAsNTYyLDA.jpg" alt="Mejor producto">
+      <img src="https://logodownload.org/wp-content/uploads/2021/05/monster-energy-logo-2.png" alt="Mejor producto">
+      <img src="https://www.ajegroup.com/wp-content/uploads/2020/05/logo-big-cola.jpg" alt="Mejor producto">
+    </div>
+  </div>
+
+  <div class="divisora"></div>
+
+<!--Aqui se generan las encuestas-->
+  <div class="encuestas">
+    <div class="cuadro">
+      <p>Encuesta <br> Cocacola</p>
+      <input class="submit-button" type="submit" name="comenzar" value="Comenzar">
+    </div>
+    
+    
+  </div>
+
+</div>
+
+</body>
+</html>
+

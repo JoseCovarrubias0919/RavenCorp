@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="C:\Users\braya\OneDrive\Documents\TECNL\RavenCorp\Logos\LogoRavenCorrp.png">
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<title>RavenCorp - Encuesta Cocacola</title>
+<style>
+/* Estilos CSS para adaptar el contenido a la pantalla */
+body {
+  font-family: calibri;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 100%;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+.header {
+  background-color: #8416A2;
+  padding: 8px;
+  margin-top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.header img {
+  max-width: 15%;
+  height: auto;
+}
+
+.btnRegresar {
+  padding: 10px 20px;
+  font-size: 25px;
+  background-color: #CBCBCB;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 25px;
+}
+
+.btnRegresar:hover {
+  background-color: #707070;
+}
+
+.titulo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 10vh;
+  margin: 10px;
+  font-size: 70px;
+}
+
+.divisora {
+  width: 100%;
+  max-width: 1760px;
+  height: 2px;
+  background-color: #CCCCCC;
+  margin: 0 auto;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.btnEnviar {
+  padding: 10px 20px;
+  font-size: 25px;
+  background-color: #8416A2;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 25px;
+}
+
+.pregunta textarea {
+	resize:none
+}
+
+.pregunta {
+  margin-left: 100px;
+  font-size: 40px;
+}
+
+.radio-label {
+  display: inline-block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 20px;
+  color: #555555;
+}
+
+.radio-label input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.checkmark {
+  position: absolute;
+  top: 4px;
+  left: 0;
+  height: 24px;
+  width: 24px;
+  background-color: #ffffff;
+  border: 2px solid #707070;
+  border-radius: 50%;
+}
+
+.radio-label:hover input ~ .checkmark {
+  background-color: #f6f6f6;
+}
+
+.radio-label input:checked ~ .checkmark {
+  background-color: #8416A2;
+  border: 2px solid #8416A2;
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.radio-label input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.radio-label .checkmark:after {
+  top: 6px;
+  left: 6px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: white;
+}
+
+.btnEnviar{
+  margin-bottom: 50px;
+  background-color: #6b118a;
+}
+
+/**/
+.likert-slider {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 500px;
+    }
+
+    .likert-slider input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 8px;
+      border-radius: 5px;
+      background: linear-gradient(to right, red, blue);
+      outline: none;
+      margin: 10px 0;
+    }
+
+    .likert-slider input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background-color: #555;
+      cursor: pointer;
+      margin-top: -6px;
+    }
+
+    .likert-slider input[type="range"]::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background-color: #555;
+      cursor: pointer;
+      margin-top: -6px;
+    }
+
+    .likert-slider .emojis {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      font-size: 50px;
+    }
+/**/
+
+@media screen and (max-width: 768px) {
+  .header {
+    padding: 10px;
+  }
+}
+</style>
+</head>
+<script>
+  function asignarValorSlider() {
+  // Obtener el valor de calificacion_total desde el HTML
+  var calificacion_total = parseInt("{{ calificacion_total }}");
+
+  // Asignar el valor al slider
+  document.getElementById('slider').value = calificacion_total;
+}
+  document.addEventListener('DOMContentLoaded', function() {
+    asignarValorSlider();
+    document.getElementById('enviar').addEventListener('click', enviarDatos);
+    var inputEnviar = document.getElementById('enviar');
+    inputEnviar.addEventListener('click', function() {
+      // Ejecutar la función para asignar el valor del slider
+      asignarValorSlider();
+    });
+  function enviarDatos() {
+    var textareas = document.getElementsByTagName('textarea');
+    var data = [];
+
+    for (var i = 0; i < textareas.length; i++) {
+      var textarea = textareas[i];
+      var id = textarea.id;
+      var texto = textarea.value;
+      var item = {id: parseInt(id), texto: texto};
+      data.push(item);
+      console.log(data);
+    }
+
+    // Realizar una solicitud POST a la ruta '/enviar' del servidor Flask
+    fetch('/enviar', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    });
+  }
+  });
+</script>
+<body>
+
+<div class="container">
+  <form action="/enviar" method="post"></form>
+  <header class="header">
+    <img src="C:\Users\braya\OneDrive\Documents\TECNL\RavenCorp\Logos\Raven corp Letras 2.png" alt="Imagen en el centro">
+  </header>
+
+  <div style="display: flex; justify-content: center;">
+    <input class="btnRegresar" type="submit" name="regresar" value="Regresar">
+  </div>
+
+  <div class="titulo">
+    <h1 class="titulo">Calidad de Productos Coca Cola</h1>
+  </div>
+
+  <div class="cuestionario" >
+    <div class="pregunta" >
+      <strong>¿En qué rango de edad te encuentras?</strong>
+      <br>
+      <label class="radio-label" for="opcion1">
+        <input type="radio" id="opcion1" name="edad" value="Menor de 15">
+        <span class="checkmark"></span>
+        Menor de 15
+      </label>
+      <br>
+      <label class="radio-label" for="opcion2">
+        <input type="radio" id="opcion2" name="edad" value="20-30 años">
+        <span class="checkmark"></span>
+        20-30 años
+      </label>
+      <br>
+      <label class="radio-label" for="opcion3">
+        <input type="radio" id="opcion3" name="edad" value="30-40 años">
+        <span class="checkmark"></span>
+        30-40 años
+      </label>
+      <br>
+      <label class="radio-label" for="opcion4">
+        <input type="radio" id="opcion4" name="edad" value="Mayor de 40 años">
+        <span class="checkmark"></span>
+        Mayor de 40 años
+      </label>
+    </div>
+    <div class="divisora"></div>
+
+    <div class="pregunta" >
+      <strong>¿Con que genero te identificas?</strong>
+      <br>
+      <label class="radio-label" for="op1">
+        <input type="radio" id="op1" name="sexo" value="Femenino">
+        <span class="checkmark"></span>
+        Femenino
+      </label>
+      <br>
+      <label class="radio-label" for="op2">
+        <input type="radio" id="op2" name="sexo" value="Masculino">
+        <span class="checkmark"></span>
+        Masculino
+      </label>
+      <br>
+      <label class="radio-label" for="op3">
+        <input type="radio" id="op3" name="sexo" value="Prefiero no decirlo">
+        <span class="checkmark"></span>
+        Prefiero no decirlo
+      </label>
+      <br>
+      <label class="radio-label" for="op4">
+        <input type="radio" id="op14" name="sexo" value="Mayor de 40 años">
+        <span class="checkmark"></span>
+        Mayor de 40 años
+      </label>
+    </div>
+    <div class="divisora"></div>
+
+   
+
+    <div class="pregunta" >
+      <strong>¿Cuánto tiempo has sido consumidor de Coca-Cola?</strong>
+      <br>
+      <textarea name="pregunta" cols="210" rows="10" id = 3></textarea>
+    </div>
+    <div class="divisora"></div>
+
+    <div class="pregunta" >
+      <strong>¿Con qué frecuencia consumes Coca-Cola?</strong>
+      <br>
+      <textarea name="pregunta" cols="210" rows="10" id = 4></textarea>
+    </div>
+    <div class="divisora"></div>
+
+    <div class="pregunta" >
+      <strong>¿Qué características te gustan de los productos de Coca-Cola?</strong>
+      <br>
+      <textarea name="pregunta" cols="210" rows="10" id = 5></textarea>
+    </div>
+    <div class="divisora"></div>
+
+    <div class="pregunta" >
+      <strong>¿Qué opinas sobre la calidad de los productos de Coca-Cola en comparación con otras marcas <br>de bebidas gaseosas?</strong>
+      <br>
+      <textarea name="pregunta" cols="210" rows="10" id = 6></textarea>
+    </div>
+    <div class="divisora"></div>
+
+    <div class="pregunta" >
+      <strong>¿Qué te motiva a elegir Coca-Cola en lugar de otras opciones?</strong>
+      <br>
+      <textarea name="pregunta" cols="210" rows="10" id = 7></textarea>
+    </div>
+    <div class="divisora"></div>
+
+    <div class="pregunta" >
+      <strong>¿Has notado algún cambio en la calidad de los productos de Coca-Cola a lo largo del tiempo?</strong>
+      <br>
+      <textarea name="pregunta" cols="210" rows="10" id = 8></textarea>
+    </div>
+    <div class="divisora"></div>
+
+    <div class="pregunta" >
+      <strong>¿Qué esperas de un producto de Coca-Cola en términos de sabor y experiencia de consumo?</strong>
+      <br>
+      <textarea name="pregunta" cols="210" rows="10" id = 9></textarea>
+    </div>
+    <div class="divisora"></div>
+
+    <div class="pregunta" >
+      <strong>¿Qué factores influyen en tu decisión de compra de los productos de Coca-Cola?</strong>
+      <br>
+      <textarea name="pregunta" cols="210" rows="10" id = 10></textarea>
+    </div>
+    <div class="divisora"></div>
+    <div class="pregunta" >
+    <strong>Calificacion de la encuesta</strong>
+      <center>
+      <div class="likert-slider">
+        <input type="range" id="slider" name="likert" min="1" max="5" step="1" value="{{ calificacion_total }}">
+        <div class="emojis">
+          <label for="emoji1">&#128577;</label>
+          <label for="emoji2">&#128533;</label>
+          <label for="emoji3">&#128528;</label>
+          <label for="emoji4">&#128512;</label>
+          <label for="emoji5">&#128515;</label>
+        </div>
+      </div>
+      </center>
+    </div>
+    
+
+  </div>
+  <div style="display: flex; justify-content: center;">
+    <input id="enviar" class="btnEnviar" type="button" name="enviar" value="Enviar">
+  </div>
+</form>
+</div>
+</body>
+</html>

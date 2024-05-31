@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>{% block title %}{% endblock %}</title>
+	<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/Prueba.css') }}">
+</head>
+<body>
+	{% block body %}{% endblock %}
+	<script src="{{ url_for('static', filename='js/Prueba.js') }}"></script>
+</body>
+</html>

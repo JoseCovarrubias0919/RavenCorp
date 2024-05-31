@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Encuesta sobre Coca-Cola</title>
+	<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+	<h1>Encuesta sobre Coca-Cola</h1>
+	<form id="encuestaForm">
+		<label for="edad">Edad:</label>
+		<input type="number" name="edad" id="edad"><br>
+
+		<label for="genero">Género:</label>
+		<select name="genero" id="genero">
+			<option value="mujer">Mujer</option>
+			<option value="hombre">Hombre</option>
+			<option value="otro">Otro</option>
+		</select><br>
+
+		<label for="dinero">¿Cuánto dinero tienes para gastar cuando estás en la calle?</label>
+		<input type="number" name="dinero" id="dinero"><br>
+
+		<label for="opinion">¿Qué opinas de la marca Coca-Cola?</label><br>
+		<textarea name="opinion" id="opinion"></textarea><br>
+
+		<label for="situaciones">¿Qué situaciones te llevan a consumir Coca-Cola?</label><br>
+		<textarea name="situaciones" id="situaciones"></textarea><br>
+
+		<label for="aspectosGustan">¿Qué aspectos te gustan de Coca-Cola?</label><br>
+			<textarea name="aspectosGustan" id="aspectosGustan"></textarea><br>
+
+		<label for="aspectosNoGustan">¿Qué aspectos no te gustan de Coca-Cola?</label><br>
+			<textarea name="aspectosNoGustan" id="aspectosNoGustan"></textarea><br>
+
+		<label for="sabor">¿Qué te parece el sabor de Coca-Cola?</label><br>
+		<textarea name="sabor" id="sabor"></textarea><br>
+
+		<label for="dulzura">¿Qué te parece el nivel de dulzura de Coca-Cola?</label><br>
+		<textarea name="dulzura" id="dulzura"></textarea><br>
+
+		<label for="diferencia">¿Crees que Coca-Cola se diferencia de otras bebidas gaseosas en términos de sabor o calidad?</label><br>
+		<textarea name="diferencia" id="diferencia"></textarea><br>
+
+		<label for="cambios">¿Has notado alguna diferencia en la calidad o sabor de Coca-Cola en los últimos años?</label><br>
+		<textarea name="cambios" id="cambios"></textarea><br>
+
+		<label for="bajaCaloria">¿Comprarías Coca-Cola con más frecuencia si tuviera una versión baja en calorías?</label><br>
+		<textarea name="bajaCaloria" id="bajaCaloria"></textarea><br>
+
+		<label for="sugerencias">¿Tienes alguna sugerencia para mejorar Coca-Cola?</label><br>
+		<textarea name="sugerencias" id="sugerencias"></textarea><br>
+        
+  <input type="submit" value="Enviar">
+</form>
+</div>
+  <div id="grafica"></div>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script>
+    const form = document.getElementById("encuesta");
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const formData = new FormData(event.target);
+      const entries = [...formData.entries()];
+      const response = await fetch("/evaluador", {
+        method: "POST",
+        body: JSON.stringify(entries),
+        headers: { "Content-Type": "application/json" },
+      });
+      const data = await response.json();
+      const grafica = document.getElementById("grafica");
+      Plotly.newPlot(grafica, data);
+    });
+  </script>
+</body>
+</html>
